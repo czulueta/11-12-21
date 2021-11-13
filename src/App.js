@@ -4,22 +4,28 @@ import Auth from "./components/Auth.js"
 import Profile from "./components/Profile.js"
 import Public from "./components/Public.js"
 import { UserContext } from "./context/UserProvider.js"
+import { Switch, Route, Redirect } from "react-router-dom"
+import ProtectedRoute from "./components/ProtectedRoute.js"
 
 export default function App(){
-  const { } = useContext(UserContext)
+  const { logout, token } = useContext(UserContext)
   return(
     <div>
-      <Navbar />
+      <Navbar logout={logout}/>
       <Switch>
         <Route
           exact path="/"
-          render={() => <Auth />} />
-        <Route
+          render={() => token ? <Redirect path="/profile"/> : <Auth />} />
+        <ProtectedRoute
           path="/profile"
-          render={() => <Profile />} />
-        <Route
+          component={Profile}
+          redirectTo="/"
+          token={token} />
+        <ProtectedRoute
           path="/public"
-          render={() => <Public />} />
+          component={Public}
+          redirectTo="/"
+          token={token} />
       </Switch>
     </div>
   )
