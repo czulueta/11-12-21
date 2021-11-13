@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useContext } from "react"
+import Navbar from "./components/Navbar.js"
+import Auth from "./components/Auth.js"
+import Profile from "./components/Profile.js"
+import Public from "./components/Public.js"
+import { UserContext } from "./context/UserProvider.js"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+export default function App(){
+  const { } = useContext(UserContext)
+  return(
+    <div>
+      <Navbar />
+      <Switch>
+        <Route
+          exact path="/"
+          render={() => <Auth />} />
+        <Route
+          path="/profile"
+          render={() => <Profile />} />
+        <Route
+          path="/public"
+          render={() => <Public />} />
+      </Switch>
     </div>
-  );
+  )
 }
-
-export default App;
